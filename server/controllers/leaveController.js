@@ -3,48 +3,89 @@ const Leave = require("../models/Leave");
 
 // APPLY LEAVE
 const applyLeave = async (req, res) => {
+
   try {
-    const leave = await Leave.create(req.body);
+
+    const {
+      employeeId,
+      reason,
+      fromDate,
+      toDate,
+    } = req.body;
+
+    const leave = await Leave.create({
+      employeeId,
+      reason,
+      fromDate,
+      toDate,
+      status: "Pending",
+    });
 
     res.status(201).json(leave);
+
   } catch (error) {
+
+    console.log(error);
+
     res.status(500).json({
-      message: error.message,
+      message: "Server Error",
     });
   }
 };
 
 
-// GET LEAVES
+// GET ALL LEAVES
 const getLeaves = async (req, res) => {
+
   try {
+
     const leaves = await Leave.find()
-      .populate("employeeId");
+      .populate("employeeId", "name email");
 
     res.status(200).json(leaves);
+
   } catch (error) {
+
+    console.log(error);
+
     res.status(500).json({
-      message: error.message,
+      message: "Server Error",
     });
   }
 };
 
 
-// UPDATE LEAVE STATUS
+// APPROVE / REJECT LEAVE
 const updateLeaveStatus = async (req, res) => {
-  try {
-    const leave = await Leave.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-      }
-    );
 
-    res.status(200).json(leave);
+  try {
+
+    const { status } = req.body;
+
+    const leave = await Leave.findById(req.params.id);
+
+    if (!leave) {
+
+      return res.status(404).json({
+        message: "Leave not found",
+      });
+    }
+
+    leave.status = status;
+
+    await leave.save();
+
+    res.status(200).json({
+      message: "Leave updated successfully",
+      leave,
+    });
+
   } catch (error) {
+
+    console.log(error);
+
     res.status(500).json({
-      message: error.message,
+      message: "Server Error",
     });
   }
 };
