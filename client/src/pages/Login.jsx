@@ -203,7 +203,20 @@ const Login = () => {
                             ? "Login"
                             : "Sign up"}
                     </button>
+<p
+  onClick={() =>
+    setState(state === "login" ? "register" : "login")
+  }
+  className="text-gray-400 text-sm mt-3 mb-8 cursor-pointer"
+>
+  {state === "login"
+    ? "Don't have an account?"
+    : "Already have an account?"}
 
+  <span className="text-indigo-400 ml-1">
+    Click here
+  </span>
+</p>
                     
 
                 </form>

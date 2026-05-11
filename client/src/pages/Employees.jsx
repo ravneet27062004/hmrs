@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API from "../services/api"
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
@@ -8,7 +9,7 @@ const Employees = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get(
+      const res = await API.get(
         `${import.meta.env.VITE_API_URL}/api/employees`,
         {
           headers: {
@@ -43,9 +44,27 @@ const Employees = () => {
     }
   };
 
-  useEffect(() => {
-    fetchEmployees();
-  }, []);
+ useEffect(() => {
+
+  const fetchEmployees = async () => {
+
+    try {
+
+      const res = await API.get("/employees");
+
+      setEmployees(res.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Failed to fetch employees");
+    }
+  };
+
+  fetchEmployees();
+
+}, []);
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
