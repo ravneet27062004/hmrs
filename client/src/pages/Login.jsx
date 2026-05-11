@@ -54,7 +54,7 @@ const Login = () => {
 
                 alert("Login Successful");
 
-                navigate("/dashboard");
+             window.location.href = "/dashboard";
 
             } else {
 
