@@ -50,14 +50,7 @@ const Dashboard = () => {
         fetchStats();
     }, []);
 
-    const handleLogout = () => {
-
-        localStorage.removeItem("token");
-
-        localStorage.removeItem("user");
-
-        navigate("/");
-    };
+   
 
     return (
 
@@ -89,13 +82,7 @@ const Dashboard = () => {
 
                 </div>
 
-                <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-5 py-2 rounded-full transition "
-                >
-                    <FaSignOutAlt />
-                    Logout
-                </button>
+                
 
             </div>
 
