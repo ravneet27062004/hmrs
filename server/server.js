@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors({
-  origin: ["https://hrms-25er.vercel.app", "http://localhost:5173"],
+  origin: ["https://hmrs-25er.vercel.app", "http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
